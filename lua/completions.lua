@@ -71,7 +71,7 @@ local servers = {
 	-- 'cssls',
 	-- 'html',
 	-- 'jsonls',
-	-- 'eslint',
+	'eslint',
 	'jdtls'
 }
 
