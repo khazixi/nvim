@@ -12,7 +12,7 @@ vim.o.softtabstop = 4
 vim.o.expandtab = true
 
 -- Globals
-vim.g.clipboard = 'unnamedplus'
+-- vim.g.clipboard = 'unnamedplus'
 -- vim.g.tokyonight_style = 'storm'
 --
 -- vim.cmd[[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]]
