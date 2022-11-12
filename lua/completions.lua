@@ -75,6 +75,14 @@ local servers = {
 	'jdtls'
 }
 
+if vim.loop.os_uname().sysname == 'Darwin' then
+    for idx, val in ipairs(servers) do
+        if val == 'clangd' then
+            servers[idx] = 'sourcekit'
+        end
+    end
+end
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
