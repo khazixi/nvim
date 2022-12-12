@@ -26,6 +26,9 @@ return require("packer").startup(function()
 		'neovim/nvim-lspconfig',
 		requires = {
 			'onsails/lspkind.nvim',
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+            'VonHeikemen/lsp-zero.nvim',
 		},
 	}
 
@@ -48,5 +51,11 @@ return require("packer").startup(function()
         requires = {
             'nvim-telescope/telescope.nvim',
         }
+    }
+
+    -- debugger
+    use {
+        'mfussenegger/nvim-dap',
+        'rcarriga/nvim-dap-ui',
     }
 end)

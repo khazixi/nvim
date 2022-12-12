@@ -4,11 +4,11 @@ if (vim.g.neovide) then
 	require('settings.guisettings')
 end
 
-
 require('sitter')
 require('plugins')
-require('completions')
 require('colorshemes')
+require('completions')
+
 
 -- Keymaps go here
 -- require('settings.mappings')
