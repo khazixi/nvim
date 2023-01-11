@@ -1,21 +1,16 @@
 local lsp = require('lsp-zero')
-local cmp = require("cmp")
-local lspkind = require("lspkind")
 
 lsp.preset('recommended')
 
-require('mason').setup()
-require('mason-lspconfig').setup({
-    ensure_installed = {
-        'rust_analyzer',
-        'gopls',
-        'clangd',
-        'neocmake',
-        'tsserver',
-    }
+
+lsp.ensure_installed({
+    'tsserver',
+    'gopls',
+    'rust_analyzer',
+    'pylsp',
+    'clangd'
 })
 
--- Sets Up the LSP
-for _, lsp in pairs(servers) do
-	lspconfig[lsp].setup()
-end
+lsp.nvim_workspace()
+
+lsp.setup()

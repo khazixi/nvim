@@ -5,10 +5,12 @@ treesitter.setup{
 		'c', 'cpp', 'lua',
 		'python', 'rust', 'go',
 		'html', 'json', 'css',
-		'javascript', 'typescript', 'java',
-		'julia', 'fortran', 'cmake',
-		'glsl'
+		'javascript', 'typescript',
+        -- 'java', 'julia', 'fortran',
+        'cmake',
+		-- 'glsl'
 	},
+
 	highlight = {
 		enable = true
 	},
