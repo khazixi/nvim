@@ -13,7 +13,6 @@ vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = true
 
-vim.g.mapleader = "\\"
 
 -- Globals
 -- vim.g.clipboard = 'unnamedplus'

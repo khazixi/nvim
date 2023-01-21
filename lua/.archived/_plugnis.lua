@@ -1,15 +1,11 @@
-vim.cmd('packadd packer.nvim')
+vim.cmd.packadd('packer.nvim')
 
 return require("packer").startup(function()
 	-- Plugin Manager (Updates Itself)
 	use 'wbthomason/packer.nvim'
 
 	-- Colorschemes
-	use({
-        'catppuccin/nvim',
-        as = 'catppuccin',
-        vim.cmd('colorscheme catppuccin'),
-    })
+	-- use({ 'catppuccin/nvim', as = 'catppuccin', })
     use('folke/tokyonight.nvim')
 
 	-- Aesthetics
@@ -29,7 +25,7 @@ return require("packer").startup(function()
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
-            
+
             -- Autocompletion
             {'hrsh7th/nvim-cmp'},
             {'hrsh7th/cmp-buffer'},
@@ -37,17 +33,17 @@ return require("packer").startup(function()
             {'saadparwaiz1/cmp_luasnip'},
             {'hrsh7th/cmp-nvim-lsp'},
             {'hrsh7th/cmp-nvim-lua'},
-            
+
             -- Snippets
             {'L3MON4D3/LuaSnip'},
             {'rafamadriz/friendly-snippets'},
 	    }
     })
 	-- Language Syntax Plugins
-	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-	use('nvim-treesitter/playground')
-    use('mbbill/undotree')
-    use('folke/zen-mode.nvim')
+	use({
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/playground',
+    })
 
     -- Plenary Dependent Plugins
     use({
@@ -61,11 +57,21 @@ return require("packer").startup(function()
     use({
         'mfussenegger/nvim-dap',
         'rcarriga/nvim-dap-ui',
+        'theHamsta/nvim-dap-virtual-text',
+        requires = {
+            'ChristianChiarulli/neovim-codicons',
+        },
     })
 
     -- Autopaitrs
     use({
         "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup({}) end
     })
+
+    -- Miscellaneous
+    use('mbbill/undotree')
+    use('folke/zen-mode.nvim')
+    use('numToStr/Comment.nvim')
+    use('eandrju/cellular-automaton.nvim')
+    use('folke/neodev.nvim')
 end)

@@ -6,12 +6,17 @@ treesitter.setup{
 		'python', 'rust', 'go',
 		'html', 'json', 'css',
 		'javascript', 'typescript',
+        'query',
         -- 'java', 'julia', 'fortran',
         'cmake',
 		-- 'glsl'
 	},
 
+    ignore_install = {'vim'},
+
 	highlight = {
-		enable = true
+		enable = true,
+        disable = {"vim"},
 	},
+
 }

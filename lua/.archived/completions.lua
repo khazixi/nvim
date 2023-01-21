@@ -8,7 +8,6 @@ lsp.ensure_installed({
     'gopls',
     'rust_analyzer',
     'pylsp',
-    'clangd'
 })
 
 lsp.nvim_workspace()
