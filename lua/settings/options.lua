@@ -13,6 +13,17 @@ vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = true
 
+-- if os.getenv("$TERM_PROGRAM") == "iTerm.app" then
+--     vim.fn.system({
+--         'defaults',
+--         'write',
+--         'com.googecode.iterm2',
+--         'TerminalMargin',
+--         '-int',
+--         '0'
+--     })
+-- end
+
 
 -- Globals
 -- vim.g.clipboard = 'unnamedplus'

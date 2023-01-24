@@ -10,19 +10,47 @@ return {
         'folke/zen-mode.nvim',
         config = function()
             require('zen-mode').setup()
-        end
+        end,
+        keys = {
+            {'<leader>z', '<cmd>ZenMode<cr>'}
+        }
     },
     {
+        tag = '0.1.1',
+        lazy = 'true',
         'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+            -- Native C fzf
+            -- {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
         },
         config = function()
             local telescope = require("telescope")
             telescope.setup({})
-            telescope.load_extension('fzf')
-        end
+            -- telescope.load_extension('fzf')
+        end,
+        keys = {
+            {
+                '<leader>ff',
+                function() require('telescope.builtin').find_files() end,
+            },
+            {
+                '<leader>fg',
+                function() require("telescope.builtin").live_grep() end
+            },
+            {
+                '<leader>fb',
+                function() require("telescope.builtin").buffers() end
+            },
+            {
+                '<leader>fh',
+                function() require("telescope.builtin").help_tags() end
+            },
+        }
+    },
+    {
+        'windwp/nvim-autopairs',
+        config = {}
     },
     {
         'nvim-neorg/neorg',

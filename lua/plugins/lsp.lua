@@ -38,18 +38,9 @@ return {
         config = function()
             local lsp = require("lsp-zero")
             lsp.preset('recommended')
-            lsp.ensure_installed({
-                'tsserver',
-                'html',
-                'jsonls',
-                'gopls',
-                'dockerls',
-                'rust_analyzer',
-                'pylsp',
-            })
-            lsp.configure("html", {
-                filetypes = {'html', 'tmpl'},
-            })
+            -- lsp.ensure_installed({
+            --     'jsonls',
+            -- })
             lsp.nvim_workspace()
             lsp.setup()
         end
@@ -62,13 +53,9 @@ return {
         sync_install = true,
         config = function()
             require("nvim-treesitter.configs").setup({
-                highlight = {enable = true},
-                ensure_installed = {'c', 'cpp', 'rust', 'go', 'python', 'lua'},
+                highlight = {enable = true, disable = {'vim'}},
+                -- ensure_installed = {'c', 'cpp', 'rust', 'go', 'python', 'lua'},
             })
         end,
-        highlight = {
-            enable = true,
-            disable = {'vim'}
-        }
     },
 }

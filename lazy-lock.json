@@ -17,6 +17,7 @@
   "neodev.nvim": { "branch": "main", "commit": "e905fb76f78fa19500ca3b9fac256b057aad535a" },
   "neorg": { "branch": "main", "commit": "4a9a5fe13cd454692fc4db0b27783cd005e6be56" },
   "neovim-codicons": { "branch": "main", "commit": "bd52f75ebde79b5dcb62e5f682543b58364997a7" },
+  "nvim-autopairs": { "branch": "master", "commit": "31042a5823b55c4bfb30efcbba2fc1b5b53f90dc" },
   "nvim-cmp": { "branch": "main", "commit": "11a95792a5be0f5a40bab5fc5b670e5b1399a939" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" },
   "nvim-dap": { "branch": "master", "commit": "c64a6627bb01eb151da96b28091797beaac09536" },
