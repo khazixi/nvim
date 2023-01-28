@@ -63,7 +63,7 @@ return {
                 highlight = {enable = true, disable = {'vim'}},
                 -- ensure_installed = {'c', 'cpp', 'rust', 'go', 'python', 'lua'},
             })
-            require("nvim-treesitter.install").compilers = { "gcc-12" }
+            require("nvim-treesitter.install").compilers = { "gcc" }
         end,
     },
 }
