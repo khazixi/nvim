@@ -1,6 +1,7 @@
 return {
     {
         'folke/neodev.nvim',
+        ft = 'lua',
         config = function()
             require("neodev").setup()
         end
@@ -36,13 +37,19 @@ return {
             {'rafamadriz/friendly-snippets'},
 	    },
         config = function()
-            local lsp = require("lsp-zero")
-            lsp.preset('recommended')
-            -- lsp.ensure_installed({
+            local lsp_zero = require("lsp-zero")
+            lsp_zero.preset('recommended')
+            -- lsp_zero.ensure_installed({
             --     'jsonls',
             -- })
-            lsp.nvim_workspace()
-            lsp.setup()
+            -- lsp_zero.nvim_workspace()
+
+            local cmp_sources = lsp_zero.defaults.cmp_sources()
+            table.insert(cmp_sources, {name = 'neorg'})
+            lsp_zero.setup_nvim_cmp({
+                sources = cmp_sources
+            })
+            lsp_zero.setup()
         end
     },
     {
@@ -56,6 +63,7 @@ return {
                 highlight = {enable = true, disable = {'vim'}},
                 -- ensure_installed = {'c', 'cpp', 'rust', 'go', 'python', 'lua'},
             })
+            require("nvim-treesitter.install").compilers = { "gcc-12" }
         end,
     },
 }

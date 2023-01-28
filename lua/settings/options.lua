@@ -8,6 +8,9 @@ vim.o.cursorline = true
 vim.o.smartindent = true
 vim.o.completeopt = 'menu,menuone'
 
+vim.o.splitright = true
+vim.o.splitbelow = true
+
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4

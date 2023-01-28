@@ -1,19 +1,20 @@
 -- TODO: Fix Dap
 local M = {
-  "mfussenegger/nvim-dap",
+    -- enabled = false,
+    "mfussenegger/nvim-dap",
 
-  dependencies = {
-    {
-      "rcarriga/nvim-dap-ui",
+    dependencies = {
+        {
+            "rcarriga/nvim-dap-ui",
 
-      config = function()
-        require("dapui").setup()
-      end,
+            config = function()
+                require("dapui").setup()
+            end,
+        },
+        { 'theHamsta/nvim-dap-virtual-text' },
+        {'ChristianChiarulli/neovim-codicons'},
+        { "jbyuki/one-small-step-for-vimkind" },
     },
-    { 'theHamsta/nvim-dap-virtual-text' },
-    {'ChristianChiarulli/neovim-codicons'},
-    { "jbyuki/one-small-step-for-vimkind" },
-  },
 }
 
 function M.init()
@@ -57,17 +58,23 @@ end
 function M.config()
   local dap = require("dap")
 
-  dap.configurations.lua = {
-    {
-      type = "nlua",
-      request = "attach",
-      name = "Attach to running Neovim instance",
-    },
-  }
 
     dap.adapters.nlua = function(callback, config)
-        callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
+        callback({
+            type = "server",
+            host = config.host or "127.0.0.1",
+            port = config.port or 8086
+        })
     end
+
+    dap.adapters.delve = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+            command = 'dlv',
+            args = { 'dap', '-l', '127.0.0.1:${port}' }
+        }
+    }
 
     dap.adapters.lldb = {
         type = 'executable',
@@ -75,37 +82,15 @@ function M.config()
         name = 'lldb'
     }
 
-    dap.adapters.devle = {
-        type = 'server',
-        port = '${port}',
-        executable = {
-            command = 'dlv',
-            args = {
-                'dap',
-                '-l',
-                '127.0.0.1:${port}',
-            }
-        }
-    }
-
     -- Configurations
 
-    dap.configurations.c = {
+    dap.configurations.lua = {
         {
-            name = 'Launch',
-            type = 'lldb',
-            request = 'launch',
-            program = function()
-                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-            end,
-            cwd = '${workspaceFolder}',
-            stopOnEntry = false,
-            args = {},
-        }
+            type = "nlua",
+            request = "attach",
+            name = "Attach to running Neovim instance",
+        },
     }
-
-    dap.configurations.cpp = dap.configurations.c
-    dap.configurations.rust = dap.configurations.c
 
     dap.configurations.go = {
         {
@@ -129,16 +114,34 @@ function M.config()
             program = './${relativeFileDirname}'
         },
     }
-  local dapui = require("dapui")
-  dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open({})
-  end
-  dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close({})
-  end
-  dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close({})
-  end
+
+    dap.configurations.c = {
+        {
+            name = 'Launch',
+            type = 'lldb',
+            request = 'launch',
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = '${workspaceFolder}',
+            stopOnEntry = false,
+            args = {},
+        }
+    }
+
+    dap.configurations.cpp = dap.configurations.c
+    dap.configurations.rust = dap.configurations.c
+
+    local dapui = require("dapui")
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open({})
+    end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close({})
+    end
+    dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close({})
+    end
 end
 
 -- - `DapBreakpoint` for breakpoints (default: `B`)
