@@ -47,7 +47,7 @@ function M.init()
   end, { desc = "Dap UI" })
 
   vim.keymap.set("n", "<leader>ds", function()
-    require("osv").launch({ port = 8086 })
+    require("osv").launch({ port = 8086, lvim = true })
   end, { desc = "Launch Lua Debugger Server" })
 
   vim.keymap.set("n", "<leader>dd", function()
@@ -56,7 +56,7 @@ function M.init()
 end
 
 function M.config()
-  local dap = require("dap")
+    local dap = require("dap")
 
 
     dap.adapters.nlua = function(callback, config)

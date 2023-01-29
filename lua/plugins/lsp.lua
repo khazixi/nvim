@@ -42,7 +42,7 @@ return {
             -- lsp_zero.ensure_installed({
             --     'jsonls',
             -- })
-            -- lsp_zero.nvim_workspace()
+            lsp_zero.nvim_workspace()
 
             local cmp_sources = lsp_zero.defaults.cmp_sources()
             table.insert(cmp_sources, {name = 'neorg'})
