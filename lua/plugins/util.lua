@@ -17,7 +17,7 @@ return {
         }
     },
     {
-        tag = '0.1.1',
+        -- tag = '0.1.1',
         'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
@@ -73,6 +73,15 @@ return {
                 desc = 'Telescope Keymaps'
             },
         }
+    },
+    {
+        'akinsho/toggleterm.nvim',
+        config = true,
+        cmd = {
+            'ToggleTerm',
+            'ToggleTermToggleAll',
+            'TermExec'
+        },
     },
     {
         'nvim-neorg/neorg',
