@@ -8,7 +8,7 @@ if not vim.loop.fs_stat(lazypath) then
         'clone',
         '--filter=blob:none',
         'https://github.com/folke/lazy.nvim',
-        '--branch=stable',
+        -- '--branch=stable',
         lazypath,
     })
 end
@@ -16,4 +16,27 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
-require("lazy").setup('plugins')
+
+require("lazy").setup({
+    spec = {
+        {import = 'plugins'},
+    },
+    defaults = {lazy = true},
+    checker = {enabled = true},
+    performance = {
+        cache = {enabled = true},
+        rtp = {
+            disabled_plugins = {
+                "gzip",
+                "matchit",
+                "matchparen",
+                "netrwPlugin",
+                "rplugin",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        }
+    },
+})

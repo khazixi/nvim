@@ -16,6 +16,15 @@ vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = true
 
+vim.o.foldenable = true
+vim.o.foldcolumn = '1'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+
+-- vim.o.spell = true
+-- vim.o.spl = 'en_us'
+
+
 -- if os.getenv("$TERM_PROGRAM") == "iTerm.app" then
 --     vim.fn.system({
 --         'defaults',

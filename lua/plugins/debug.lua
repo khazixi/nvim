@@ -1,18 +1,14 @@
--- TODO: Fix Dap
 local M = {
     -- enabled = false,
     "mfussenegger/nvim-dap",
+    lazy = true,
+
+    cmd = {'DapEnable'},
 
     dependencies = {
-        {
-            "rcarriga/nvim-dap-ui",
-
-            config = function()
-                require("dapui").setup()
-            end,
-        },
+        { "rcarriga/nvim-dap-ui", config = true },
         { 'theHamsta/nvim-dap-virtual-text' },
-        {'ChristianChiarulli/neovim-codicons'},
+        { 'ChristianChiarulli/neovim-codicons' },
         { "jbyuki/one-small-step-for-vimkind" },
     },
 }

@@ -1,37 +1,30 @@
 return {
-    {
-        lazy = true,
-        'eandrju/cellular-automaton.nvim'
-    },
-    {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end,
-    },
+    -- {
+    --     lazy = true,
+    --     'eandrju/cellular-automaton.nvim'
+    -- },
+    -- {
+    --     'alec-gibson/nvim-tetris',
+    --     cmd = "Tetris"
+    -- },
+    {'numToStr/Comment.nvim', config = true, lazy = false},
+    {'windwp/nvim-autopairs', config = true, event = 'InsertEnter'},
     {
         'folke/zen-mode.nvim',
-        config = function()
-            require('zen-mode').setup()
-        end,
+        config = true,
         keys = {
             {'<leader>z', '<cmd>ZenMode<cr>', desc = 'ZenMode'}
         }
     },
     {
         tag = '0.1.1',
-        lazy = 'true',
         'nvim-telescope/telescope.nvim',
         dependencies = {
             'nvim-lua/plenary.nvim',
             -- Native C fzf
             -- {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
         },
-        config = function()
-            local telescope = require("telescope")
-            telescope.setup({})
-            -- telescope.load_extension('fzf')
-        end,
+        config = true,
         keys = {
             {
                 '<leader>ff',
@@ -82,10 +75,6 @@ return {
         }
     },
     {
-        'windwp/nvim-autopairs',
-        config = {}
-    },
-    {
         'nvim-neorg/neorg',
         ft = 'norg',
         opts = {
@@ -94,6 +83,7 @@ return {
                 ['core.norg.completion'] = {
                     config = {engine = 'nvim-cmp'}
                 },
+                ['core.highlights'] = {},
                 ['core.norg.concealer'] = {},
                 ['core.export.markdown'] = {},
                 ['core.integrations.nvim-cmp'] = {},
