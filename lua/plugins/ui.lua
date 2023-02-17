@@ -1,5 +1,5 @@
 return {
-    {'kyazdani42/nvim-web-devicons', lazy = false},
+    {'nvim-tree/nvim-web-devicons', lazy = false},
     {
         'nvim-lualine/lualine.nvim',
         lazy = false,
@@ -55,9 +55,21 @@ return {
         config = true,
         cmd = 'NvimTreeToggle',
     },
+    -- TODO: Finalize the dahsboard design
+    -- {
+    --     
+    --     'glepnir/dashboard-nvim',
+    --     event = 'VimEnter',
+    --     config = function()
+    --         require('dashboard').setup({
+    --             theme = 'doom',
+    --             disable_move = true,
+    --         })
+    --     end,
+    -- },
     {
         'norcalli/nvim-colorizer.lua',
-        ft = {'css'},
+        ft = {'css', 'svelte', 'tsx', 'jsx', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact',},
         event = 'BufReadPre',
     },
 }

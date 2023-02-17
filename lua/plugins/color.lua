@@ -1,8 +1,8 @@
 return {
     -- {'folke/tokyonight.nvim', lazy = false },
-    {'shaunsingh/nord.nvim'},
-    {'ellisonleao/gruvbox.nvim'},
-    {'shaunsingh/oxocarbon.nvim'},
+    -- {'shaunsingh/nord.nvim'},
+    -- {'ellisonleao/gruvbox.nvim'},
+    -- {'shaunsingh/oxocarbon.nvim'},
     {
         'catppuccin/nvim',
         lazy = false,

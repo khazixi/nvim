@@ -29,7 +29,7 @@ return {
                 },
                 playground = {
                     enable = true,
-                    disable ={},
+                    disable ={ 'markdown', },
                     updatetime = 30,
                     persist_queries = false,
                     keybindings = {
