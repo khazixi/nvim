@@ -1,108 +1,146 @@
+-- INFO: LSP Settings
 return {
-
-    -- LSP - ZERO
-    {
-        'folke/neoconf.nvim',
-        lazy = false,
-        config = true,
-        priority = 850,
-    },
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        dependencies = {
-		  -- LSP Support
-            {'neovim/nvim-lspconfig'},
-            { 'williamboman/mason.nvim', config = true },
-            { 'williamboman/mason-lspconfig.nvim', config = true },
-
-            -- Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-buffer'},
-            {'hrsh7th/cmp-path'},
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-nvim-lua'},
-            {'saadparwaiz1/cmp_luasnip'},
-            -- Extra-Autocomplete
-            {'hrsh7th/cmp-calc'},
-            -- {'f3fora/cmp-spell'},
-            -- {'kdheepak/cmp-latex-symbols'},
-            -- {'hrsh7th/cmp-emoji'},
-            -- {'ray-x/cmp-treesitter'},
-
-
-            -- Snippets
-            {'L3MON4D3/LuaSnip'},
-            {'rafamadriz/friendly-snippets'},
-	    },
-        lazy = false,
-        priority = 800,
-        -- event = 'InsertEnter',
-        config = function()
-            local lsp_zero = require("lsp-zero")
-            lsp_zero.preset('recommended')
-            lsp_zero.nvim_workspace()
-            lsp_zero.setup_nvim_cmp({
-                sources = {
-                    {name = 'path'},
-                    {name = 'calc'},
-                    {name = 'neorg'},
-                    {name = 'buffer'},
-                    {name = 'luasnip'},
-                    {name = 'nvim_lsp'},
-                    {name = 'nvim_lua'},
-                    -- {name = 'spell', option = {
-                    --     keep_all_entries = false,
-                    --     enable_in_context = true
-                    -- }},
-                    -- {name = 'emoji', insert = true},
-                    -- {name = 'treesitter'},
-                    -- {name = 'latex_symbols', option = { strategy = 0 }}
-                }
-            })
-            lsp_zero.setup()
+  {
+    -- INFO: LSP ZERO
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
+    priority = 900,
+    lazy = false,
+    config = function()
+      require('lsp-zero.settings').preset({})
+    end
+  },
+  {
+    -- INFO: LSP
+    'neovim/nvim-lspconfig',
+    lazy = false,
+    -- cmd = 'LspInfo',
+    -- event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      {
+        'williamboman/mason.nvim',
+        build = function()
+          pcall(vim.cmd, 'MasonUpdate')
         end
+      },
+      { 'williamboman/mason-lspconfig.nvim' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'kevinhwang91/nvim-ufo' },
+      { 'kevinhwang91/promise-async' },
+      -- { 'folke/neodev.nvim', }
     },
-    {
-        'folke/neodev.nvim',
-        ft = 'lua',
-        config = true,
+    config = function()
+      -- require("neodev").setup() -- INFO: Enables autocomplete for neovim
+
+      local lsp = require('lsp-zero')
+
+      vim.keymap.set('n', 'zR', function()
+        require('ufo').openAllFolds()
+      end)
+      vim.keymap.set('n', 'zM', function()
+        require('ufo').closeAllFolds()
+      end)
+      require('ufo').setup()
+
+      lsp.on_attach(function(client, bufnr)
+        lsp.default_keymaps({ buffer = bufnr })
+      end)
+      -- require('lspconfig').lua_ls.setup({
+      --   settings = {
+      --     Lua = {
+      --       completion = {
+      --         callSnippet = "Replace"
+      --       }
+      --     }
+      --   }
+      -- })
+
+      -- lsp.set_server_config({
+      --   capabilities = {
+      --     textDocument = {
+      --       foldingRange = {
+      --         dynamicRegistration = false,
+      --         lineFoldingOnly = true
+      --       }
+      --     }
+      --   }
+      -- })
+      lsp.setup()
+    end,
+  },
+
+  {
+    -- INFO: Autocomplete
+    'hrsh7th/nvim-cmp',
+    lazy = false,
+    -- event = 'InsertEnter',
+    dependencies = {
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'saadparwaiz1/cmp_luasnip' },
+      { 'L3MON4D3/LuaSnip' },
+      { 'rafamadriz/friendly-snippets' },
     },
-    {
-        'kevinhwang91/nvim-ufo',
-        event = 'UIEnter',
-        opts = {},
-        init = function()
-            vim.keymap.set('n', 'zR', function()
-                require('ufo').openAllFolds()
-            end)
-            vim.keymap.set('n', 'zM', function()
-                require('ufo').closeAllFolds()
-            end)
-        end, dependencies = {
-            'kevinhwang91/promise-async',
-        }
-    },
-    {
-        'jose-elias-alvarez/null-ls.nvim',
-        event = 'InsertEnter',
-        lazy = false,
-        priority = 700,
-        config = function()
-            require("mason-null-ls").setup({
-                ensure_installed = nil,
-                automatic_installation = false,
-                automatic_setup = true,
-            })
-            require('null-ls').setup({
-                debounce = 150,
-                save_after_format = false,
-            })
-            require("mason-null-ls").setup_handlers()
-        end,
-        dependencies = {
-            {'nvim-lua/plenary.nvim'},
-            {'williamboman/mason.nvim'},
-            {'jay-babu/mason-null-ls.nvim'},
+    config = function()
+      require('luasnip.loaders.from_vscode').lazy_load()
+      local cmp = require('cmp')
+      cmp.setup({
+        preselect = 'item',
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
         },
+        sources = {
+          { name = 'path' },
+          { name = 'calc' },
+          { name = 'neorg' },
+          { name = 'buffer' },
+          { name = 'luasnip' },
+          { name = 'nvim_lsp' },
+          { name = 'nvim_lua' },
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        mapping = {
+          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        }
+      })
+      require('lsp-zero.cmp').extend({
+          set_sources = 'lsp',
+          set_basic_mappings = true,
+          set_extra_mappings = true,
+          use_luasnip = true,
+          set_format = true,
+          documentation_window = true,
+        }
+      )
+    end
+  },
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = 'InsertEnter',
+    lazy = false,
+    priority = 700,
+    config = function()
+      require('mason-null-ls').setup({
+        ensure_installed = nil,
+        automatic_installation = false,
+        automatic_setup = true,
+      })
+      require('null-ls').setup({
+        debounce = 150,
+        save_after_format = false,
+        require('null-ls').builtins.formatting.prettierd.with({
+          extra_filetypes = { 'svelte' }
+        })
+      })
+    end,
+    dependencies = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'williamboman/mason.nvim' },
+      { 'jay-babu/mason-null-ls.nvim' },
     },
+  },
 }
