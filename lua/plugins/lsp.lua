@@ -31,7 +31,6 @@ return {
     },
     config = function()
       -- require("neodev").setup() -- INFO: Enables autocomplete for neovim
-
       local lsp = require('lsp-zero')
 
       vim.keymap.set('n', 'zR', function()
@@ -45,26 +44,16 @@ return {
       lsp.on_attach(function(client, bufnr)
         lsp.default_keymaps({ buffer = bufnr })
       end)
-      -- require('lspconfig').lua_ls.setup({
-      --   settings = {
-      --     Lua = {
-      --       completion = {
-      --         callSnippet = "Replace"
-      --       }
-      --     }
-      --   }
-      -- })
 
-      -- lsp.set_server_config({
-      --   capabilities = {
-      --     textDocument = {
-      --       foldingRange = {
-      --         dynamicRegistration = false,
-      --         lineFoldingOnly = true
-      --       }
-      --     }
-      --   }
-      -- })
+      require('lspconfig').volar.setup({
+        autostart = false,
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' }
+      })
+
+      require('lspconfig').tsserver.setup({ autostart = true })
+
+      require('lspconfig').tailwindcss.setup({ autostart = true })
+
       lsp.setup()
     end,
   },
@@ -108,18 +97,18 @@ return {
         }
       })
       require('lsp-zero.cmp').extend({
-          set_sources = 'lsp',
-          set_basic_mappings = true,
-          set_extra_mappings = true,
-          use_luasnip = true,
-          set_format = true,
-          documentation_window = true,
-        }
+        set_sources = 'lsp',
+        set_basic_mappings = true,
+        set_extra_mappings = true,
+        use_luasnip = true,
+        set_format = true,
+        documentation_window = true,
+      }
       )
     end
   },
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     event = 'InsertEnter',
     lazy = false,
     priority = 700,
@@ -129,7 +118,7 @@ return {
         automatic_installation = false,
         automatic_setup = true,
       })
-      require('null-ls').setup({
+      require('none-ls').setup({
         debounce = 150,
         save_after_format = false,
         require('null-ls').builtins.formatting.prettierd.with({
