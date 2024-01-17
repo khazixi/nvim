@@ -72,7 +72,8 @@ return {
       { 'rafamadriz/friendly-snippets' },
     },
     config = function()
-      require('luasnip.loaders.from_vscode').lazy_load()
+      -- require('luasnip.lononeaders.from_vscode').lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load()
       local cmp = require('cmp')
       cmp.setup({
         preselect = 'item',
@@ -118,7 +119,7 @@ return {
         automatic_installation = false,
         automatic_setup = true,
       })
-      require('none-ls').setup({
+      require('null-ls').setup({
         debounce = 150,
         save_after_format = false,
         require('null-ls').builtins.formatting.prettierd.with({
