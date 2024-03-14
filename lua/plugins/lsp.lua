@@ -46,11 +46,11 @@ return {
       end)
 
       require('lspconfig').volar.setup({
-        autostart = false,
+        autostart = true,
         filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' }
       })
 
-      require('lspconfig').tsserver.setup({ autostart = true })
+      require('lspconfig').tsserver.setup({ autostart = false })
 
       require('lspconfig').tailwindcss.setup({ autostart = true })
 
