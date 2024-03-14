@@ -7,38 +7,38 @@ return {
   --     'alec-gibson/nvim-tetris',
   --     cmd = 'Tetris'
   -- },
-  {
-    "frabjous/knap",
-    ft = 'tex',
-    config = function()
-      vim.g.knap_settings = {
-        texoutputext = "pdf",
-        textopdf = "pdflatex -interaction=batchmode -halt-on-error -synctex=1 %docroot%",
-        textopdfviewerlaunch =
-        "sioyek --inverse-search 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%1'\"'\"',%2,%3)\"' --new-window %outputfile%",
-        textopdfviewerrefresh = "none",
-        textopdfforwardjump =
-        "sioyek --inverse-search 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%1'\"'\"',%2,%3)\"' --reuse-window --forward-search-file %srcfile% --forward-search-line %line% %outputfile%",
-        -- textopdfshorterror = "A=%outputfile% ; LOGFILE=\"${A%.pdf}.log\" ; rubber-info \"$LOGFILE\" 2>&1 | head -n 1",
-        textopdfbufferasstdin = false,
-        delay = 1000
-      }
-      vim.api.nvim_create_user_command('KnapOpen', function() require('knap').process_once() end, {})
-      vim.api.nvim_create_user_command('KnapClose', function() require('knap').close_viewer() end, {})
-      vim.api.nvim_create_user_command('KnapTogglePreview', function() require('knap').toggle_autopreviewing() end, {})
-      vim.api.nvim_create_user_command('KnapJump', function() require('knap').forward_jump() end, {})
-    end
-  },
+  -- {
+  --   "frabjous/knap",
+  --   ft = 'tex',
+  --   config = function()
+  --     vim.g.knap_settings = {
+  --       texoutputext = "pdf",
+  --       textopdf = "pdflatex -interaction=batchmode -halt-on-error -synctex=1 %docroot%",
+  --       textopdfviewerlaunch =
+  --       "sioyek --inverse-search 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%1'\"'\"',%2,%3)\"' --new-window %outputfile%",
+  --       textopdfviewerrefresh = "none",
+  --       textopdfforwardjump =
+  --       "sioyek --inverse-search 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%1'\"'\"',%2,%3)\"' --reuse-window --forward-search-file %srcfile% --forward-search-line %line% %outputfile%",
+  --       -- textopdfshorterror = "A=%outputfile% ; LOGFILE=\"${A%.pdf}.log\" ; rubber-info \"$LOGFILE\" 2>&1 | head -n 1",
+  --       textopdfbufferasstdin = false,
+  --       delay = 1000
+  --     }
+  --     vim.api.nvim_create_user_command('KnapOpen', function() require('knap').process_once() end, {})
+  --     vim.api.nvim_create_user_command('KnapClose', function() require('knap').close_viewer() end, {})
+  --     vim.api.nvim_create_user_command('KnapTogglePreview', function() require('knap').toggle_autopreviewing() end, {})
+  --     vim.api.nvim_create_user_command('KnapJump', function() require('knap').forward_jump() end, {})
+  --   end
+  -- },
   { 'numToStr/Comment.nvim', config = true, lazy = false },
-  { 'kkharji/sqlite.lua',    lazy = false },
+  -- { 'kkharji/sqlite.lua',    lazy = false },
   { 'windwp/nvim-autopairs', config = true, event = 'InsertEnter' },
-  {
-    'folke/zen-mode.nvim',
-    config = true,
-    keys = {
-      { '<leader>z', '<cmd>ZenMode<cr>', desc = 'ZenMode' }
-    }
-  },
+  -- {
+  --   'folke/zen-mode.nvim',
+  --   config = true,
+  --   keys = {
+  --     { '<leader>z', '<cmd>ZenMode<cr>', desc = 'ZenMode' }
+  --   }
+  -- },
   {
     -- tag = '0.1.1',
     -- Needs to be false because of telescope-ui-select
