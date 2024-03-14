@@ -160,32 +160,32 @@ return {
       },
     },
   },
-  {
-    'nvim-neorg/neorg',
-    ft = 'norg',
-    build = ":Neorg sync-parsers",
-    opts = {
-      load = {
-        ['core.defaults'] = {},
-        ['core.integrations.nvim-cmp'] = {},
-        ['core.integrations.treesitter'] = {},
-        ['core.completion'] = {
-          config = { engine = 'nvim-cmp' }
-        },
-        -- ['core.export'] = {},
-        ['core.highlights'] = {},
-        ['core.concealer'] = {
-          config = {
-            folds = true,
-          }
-        },
-        -- ['core.autocommands'] = {},
-      }
-    },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    }
-  },
+  -- {
+  --   'nvim-neorg/neorg',
+  --   ft = 'norg',
+  --   build = ":Neorg sync-parsers",
+  --   opts = {
+  --     load = {
+  --       ['core.defaults'] = {},
+  --       ['core.integrations.nvim-cmp'] = {},
+  --       ['core.integrations.treesitter'] = {},
+  --       ['core.completion'] = {
+  --         config = { engine = 'nvim-cmp' }
+  --       },
+  --       -- ['core.export'] = {},
+  --       ['core.highlights'] = {},
+  --       ['core.concealer'] = {
+  --         config = {
+  --           folds = true,
+  --         }
+  --       },
+  --       -- ['core.autocommands'] = {},
+  --     }
+  --   },
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --   }
+  -- },
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
