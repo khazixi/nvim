@@ -28,14 +28,14 @@ return {
       }
     },
   },
-  {
-    'folke/noice.nvim',
-    lazy = false,
-    config = true,
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-    }
-  },
+  -- {
+  --   'folke/noice.nvim',
+  --   lazy = false,
+  --   config = true,
+  --   dependencies = {
+  --     'MunifTanjim/nui.nvim',
+  --   }
+  -- },
   {
     'folke/todo-comments.nvim',
     lazy = false,

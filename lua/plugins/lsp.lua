@@ -1,117 +1,118 @@
 -- INFO: LSP Settings
 return {
   {
-    -- INFO: LSP ZERO
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v2.x',
-    priority = 900,
-    lazy = false,
-    config = function()
-      require('lsp-zero.settings').preset({})
-    end
-  },
-  {
-    -- INFO: LSP
     'neovim/nvim-lspconfig',
     lazy = false,
-    -- cmd = 'LspInfo',
-    -- event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      {
-        'williamboman/mason.nvim',
-        build = function()
-          pcall(vim.cmd, 'MasonUpdate')
-        end
-      },
-      { 'williamboman/mason-lspconfig.nvim' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'kevinhwang91/nvim-ufo' },
-      { 'kevinhwang91/promise-async' },
-      -- { 'folke/neodev.nvim', }
-    },
+    priority = 900,
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
-      -- require("neodev").setup() -- INFO: Enables autocomplete for neovim
-      local lsp = require('lsp-zero')
+      vim.opt.signcolumn = 'yes'
 
-      vim.keymap.set('n', 'zR', function()
-        require('ufo').openAllFolds()
-      end)
-      vim.keymap.set('n', 'zM', function()
-        require('ufo').closeAllFolds()
-      end)
+      local lspconfig = require('lspconfig')
+
       require('ufo').setup()
 
-      lsp.on_attach(function(client, bufnr)
-        lsp.default_keymaps({ buffer = bufnr })
-      end)
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
-      require('lspconfig').volar.setup({
-        autostart = true,
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' }
+      require('mason').setup()
+
+      lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+        'force',
+        lspconfig.util.default_config.capabilities,
+        require('cmp_nvim_lsp').default_capabilities(),
+        {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true
+            }
+          }
+        }
+      )
+
+      require('mason-lspconfig').setup({
+        handlers = {
+          function (server_name)
+            lspconfig[server_name].setup({})
+          end,
+        }
       })
 
-      require('lspconfig').tsserver.setup({ autostart = false })
+      vim.api.nvim_create_autocmd('LspAttach', {
+        desc = 'LSP Actions',
+        callback = function(event)
+          local opts = { buffer = event.buf }
 
-      require('lspconfig').tailwindcss.setup({ autostart = true })
+          vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+          vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
+          vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, opts)
+          vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
+          vim.keymap.set('n', 'go', function() vim.lsp.buf.type_definition() end, opts)
+          vim.keymap.set('n', 'gr', function() vim.lsp.buf.references() end, opts)
+          vim.keymap.set('n', 'gs', function() vim.lsp.buf.signature_help() end, opts)
+          vim.keymap.set('n', '<F2>', function() vim.lsp.buf.rename() end, opts)
+          vim.keymap.set({'n', 'x'}, '<F3>', function() vim.lsp.buf.format({ async = true }) end, opts)
+          vim.keymap.set('n', '<F4>', function() vim.lsp.buf.code_action() end, opts)
+        end,
 
-      lsp.setup()
-    end,
-  },
+      })
 
-  {
-    -- INFO: Autocomplete
-    'hrsh7th/nvim-cmp',
-    lazy = false,
-    -- event = 'InsertEnter',
-    dependencies = {
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      {
-        'L3MON4D3/LuaSnip',
-        version = "v2.*",
-        build = "make install_jsregexp"
-      },
-      { 'rafamadriz/friendly-snippets' },
-    },
-    config = function()
-      -- require('luasnip.lononeaders.from_vscode').lazy_load()
-      require("luasnip.loaders.from_vscode").lazy_load()
       local cmp = require('cmp')
+      require('luasnip.loaders.from_vscode').lazy_load()
+
       cmp.setup({
-        preselect = 'item',
-        completion = {
-          completeopt = 'menu,menuone,noinsert',
-        },
         sources = {
-          { name = 'path' },
-          { name = 'calc' },
-          { name = 'neorg' },
-          { name = 'buffer' },
-          { name = 'luasnip' },
           { name = 'nvim_lsp' },
+          { name = 'path' },
+          { name = 'buffer' },
           { name = 'nvim_lua' },
+          { name = 'luasnip' },
         },
+        snippet = {
+          expand =  function(args)
+            require('luasnip').lsp_expand(args.body)
+          end
+        },
+        completion = {
+          completeopt = 'menu,menuone,noinsert'
+        },
+        preselect = 'item',
         window = {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
         },
         mapping = {
-          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<Tab>'] = cmp.mapping.select_next_item({ behavior = 'select' }),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
         }
       })
-      require('lsp-zero.cmp').extend({
-        set_sources = 'lsp',
-        set_basic_mappings = true,
-        set_extra_mappings = true,
-        use_luasnip = true,
-        set_format = true,
-        documentation_window = true,
-      }
-      )
-    end
+
+      vim.keymap.set({'i'}, '<Up>', function () require('luasnip').expand() end, { silent = true })
+      vim.keymap.set({'i', 's'}, '<Left>', function () require('luasnip').jump(-1) end, { silent = true })
+      vim.keymap.set({'i', 's'}, '<Right>' ,function () require('luasnip').jump(1) end, { silent = true })
+      vim.keymap.set({'i', 's'}, '<Down>' , function ()
+          if require('luasnip').choice_active()  then
+            require('luasnip').change_choice(1)
+          end
+        end, { silent = true })
+    end,
+    dependencies = {
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-buffer' },
+      { 'hrsh7th/cmp-path' },
+      { 'williamboman/mason.nvim', build = function() pcall(vim.cmd, 'MasonUpdate') end },
+      { 'williamboman/mason-lspconfig.nvim'},
+      { 'kevinhwang91/nvim-ufo' },
+      { 'kevinhwang91/promise-async' },
+      { 'L3MON4D3/LuaSnip', build = 'make install_jsregexp', version = 'v2.*' },
+      { "rafamadriz/friendly-snippets" },
+      { 'saadparwaiz1/cmp_luasnip' }
+    }
   },
+
   {
     'nvimtools/none-ls.nvim',
     event = 'InsertEnter',
@@ -119,7 +120,7 @@ return {
     priority = 700,
     config = function()
       require('mason-null-ls').setup({
-        ensure_installed = nil,
+        ensure_installed = {},
         automatic_installation = false,
         automatic_setup = true,
       })
