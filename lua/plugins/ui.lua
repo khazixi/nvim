@@ -7,8 +7,8 @@ return {
       icons_enabled = true,
       options = {
         -- component_separators =  {left = '', right = ''},
-        section_separators = { left = '', right = '' },
-        theme = 'auto',
+        -- section_separators = { left = '', right = '' },
+        -- theme = 'auto',
         -- section_separators =    {left = '', right = ''},
         component_separators = { left = '', right = '' },
       },
@@ -28,14 +28,6 @@ return {
       }
     },
   },
-  -- {
-  --   'folke/noice.nvim',
-  --   lazy = false,
-  --   config = true,
-  --   dependencies = {
-  --     'MunifTanjim/nui.nvim',
-  --   }
-  -- },
   {
     'folke/todo-comments.nvim',
     lazy = false,
@@ -59,11 +51,6 @@ return {
       "MunifTanjim/nui.nvim",
     }
   },
-  -- {
-  --   'nvim-tree/nvim-tree.lua',
-  --   config = true,
-  --   cmd = 'NvimTreeToggle',
-  -- },
   -- TODO: Finalize the dahsboard design
   -- {
   --

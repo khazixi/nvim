@@ -33,7 +33,7 @@ return {
 
       require('mason-lspconfig').setup({
         handlers = {
-          function (server_name)
+          function(server_name)
             lspconfig[server_name].setup({})
           end,
         }
@@ -52,10 +52,9 @@ return {
           vim.keymap.set('n', 'gr', function() vim.lsp.buf.references() end, opts)
           vim.keymap.set('n', 'gs', function() vim.lsp.buf.signature_help() end, opts)
           vim.keymap.set('n', '<F2>', function() vim.lsp.buf.rename() end, opts)
-          vim.keymap.set({'n', 'x'}, '<F3>', function() vim.lsp.buf.format({ async = true }) end, opts)
+          vim.keymap.set({ 'n', 'x' }, '<F3>', function() vim.lsp.buf.format({ async = true }) end, opts)
           vim.keymap.set('n', '<F4>', function() vim.lsp.buf.code_action() end, opts)
         end,
-
       })
 
       local cmp = require('cmp')
@@ -70,7 +69,7 @@ return {
           { name = 'luasnip' },
         },
         snippet = {
-          expand =  function(args)
+          expand = function(args)
             require('luasnip').lsp_expand(args.body)
           end
         },
@@ -89,30 +88,55 @@ return {
         }
       })
 
-      vim.keymap.set({'i'}, '<Up>', function () require('luasnip').expand() end, { silent = true })
-      vim.keymap.set({'i', 's'}, '<Left>', function () require('luasnip').jump(-1) end, { silent = true })
-      vim.keymap.set({'i', 's'}, '<Right>' ,function () require('luasnip').jump(1) end, { silent = true })
-      vim.keymap.set({'i', 's'}, '<Down>' , function ()
-          if require('luasnip').choice_active()  then
-            require('luasnip').change_choice(1)
-          end
-        end, { silent = true })
+      vim.keymap.set({ 'i' }, '<Up>', function() require('luasnip').expand() end, { silent = true })
+      vim.keymap.set({ 'i', 's' }, '<Left>', function() require('luasnip').jump(-1) end, { silent = true })
+      vim.keymap.set({ 'i', 's' }, '<Right>', function() require('luasnip').jump(1) end, { silent = true })
+      vim.keymap.set({ 'i', 's' }, '<Down>', function()
+        if require('luasnip').choice_active() then
+          require('luasnip').change_choice(1)
+        end
+      end, { silent = true })
     end,
     dependencies = {
       { 'hrsh7th/nvim-cmp' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-buffer' },
       { 'hrsh7th/cmp-path' },
-      { 'williamboman/mason.nvim', build = function() pcall(vim.cmd, 'MasonUpdate') end },
-      { 'williamboman/mason-lspconfig.nvim'},
+      { 'williamboman/mason.nvim',          build = function() pcall(vim.cmd, 'MasonUpdate') end },
+      { 'williamboman/mason-lspconfig.nvim' },
       { 'kevinhwang91/nvim-ufo' },
       { 'kevinhwang91/promise-async' },
-      { 'L3MON4D3/LuaSnip', build = 'make install_jsregexp', version = 'v2.*' },
+      { 'L3MON4D3/LuaSnip',                 build = 'make install_jsregexp',                     version = 'v2.*' },
       { "rafamadriz/friendly-snippets" },
       { 'saadparwaiz1/cmp_luasnip' }
     }
   },
 
+  {
+    'stevearc/conform.nvim',
+    lazy = false,
+    config = function()
+      require('mason-conform').setup()
+    end,
+    dependencies = {
+      { 'zapling/mason-conform.nvim' },
+      { 'williamboman/mason.nvim' },
+    },
+  },
+
+  {
+    'mfussenegger/nvim-lint',
+    lazy = false,
+    config = function()
+      require('mason-nvim-lint').setup()
+    end,
+    dependencies = {
+      { 'williamboman/mason.nvim' },
+      { 'rshkarin/mason-nvim-lint' }
+    }
+  }
+
+  --[[
   {
     'nvimtools/none-ls.nvim',
     event = 'InsertEnter',
@@ -138,4 +162,6 @@ return {
       { 'jay-babu/mason-null-ls.nvim' },
     },
   },
+  ]]
+
 }
