@@ -11,7 +11,6 @@ return {
     priority = 1000,
     name = 'catppuccin',
     config = function()
-      vim.g.catppuccin_flavour = 'mocha'
       vim.cmd.colorscheme('catppuccin')
     end,
   },

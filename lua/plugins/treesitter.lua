@@ -7,7 +7,7 @@ return {
     sync_install = true,
     config = function()
       require('nvim-treesitter.configs').setup({
-        higlight = { enable = true },
+        highlight = { enable = true },
         ensure_installed = { 'rust', 'typescript', 'javascript', 'tsx', 'html', 'css' },
         sync_install = false,
         auto_install = false,
